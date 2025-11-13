@@ -623,7 +623,7 @@ body[data-theme="mono"] .modalCard{ background:rgba(0,0,0,.6); border-color:#2a2
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({ email: signupEmail, password: signupPass });
+    const { error } = await supabase.auth.signUp({ email: signupEmail, password: signupPass });
     if(error){
       const msg = (error.message || '').toLowerCase();
       if(msg.includes('already') || msg.includes('registered')){
@@ -1658,7 +1658,7 @@ function ManualAdd({ lang, onAdd }:{ lang:Lang; onAdd:(minutes:number)=>void }) 
       window.removeEventListener('mouseup', up);
       window.removeEventListener('mousemove', move);
     };
-  },[dragging]);
+  },[dragging, setByClientX]);
 
   if(!adding) return <button className="iconBtn" onClick={()=>setAdding(true)}>{tt.addManually}</button>;
 
