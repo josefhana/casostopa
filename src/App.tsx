@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import {
   addDays,
@@ -1619,7 +1619,7 @@ function ManualAdd({ lang, onAdd }:{ lang:Lang; onAdd:(minutes:number)=>void }) 
   const [val,setVal]=useState(60);
   const wrapRef=useRef<HTMLDivElement|null>(null);
   const barRef=useRef<HTMLDivElement|null>(null);
-  const [dragging,setDragging]=useState(false);
+    const [dragging,setDragging]=useState(false);
 
   useEffect(()=>{
     const onDoc=(e:MouseEvent)=>{
@@ -1640,14 +1640,15 @@ function ManualAdd({ lang, onAdd }:{ lang:Lang; onAdd:(minutes:number)=>void }) 
     return (Math.abs(nearest - m) <= 6) ? nearest : Math.max(1, Math.min(totalMin, m));
   };
 
-  const setByClientX=(clientX:number)=>{
+  // NOVĚ: useCallback, aby byla funkce stabilní pro useEffect
+  const setByClientX = useCallback((clientX:number)=>{
     if(!barRef.current) return;
     const r=barRef.current.getBoundingClientRect();
     const px=clamp(clientX - r.left, 0, r.width);
     const ratio= px / r.width;
     const mins = Math.round(ratio * totalMin);
     setVal(softSnap(mins));
-  };
+  }, [softSnap]);
 
   useEffect(()=>{
     const up=()=>setDragging(false);
