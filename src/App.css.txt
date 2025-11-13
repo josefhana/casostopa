@@ -1,0 +1,161 @@
+/* ===== tema / dark ===== */
+:root{
+  --bg:#1e1e1e;
+  --panel:#262626;
+  --panel-2:#2e2e2e;
+  --border:#3a3a3a;
+  --text:#e5e7eb;
+  --text-muted:#9ca3af;
+  --accent:#f97316;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",sans-serif
+}
+
+/* ===== rozvržení stránky ===== */
+.container{
+  max-width:1100px;      /* užší obsah, nezačíná úplně vlevo */
+  margin:0 24px;
+  padding:16px 0 24px 0
+}
+.header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:12px
+}
+.header h1{margin:0}
+
+/* 2 sloupce: vlevo obsah (stopky atd.), vpravo panely */
+.layout{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  gap:16px
+}
+.leftCol{display:grid;gap:16px}
+.rightCol{display:grid;gap:16px}
+
+/* ===== karty ===== */
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px
+}
+.smallCard{padding:12px} /* malý box pro týdenní přehled vpravo nahoře */
+
+/* názvy sekcí */
+.sectionTitle{font-weight:700;margin-bottom:10px}
+.muted{color:var(--text-muted);font-size:13px}
+
+/* ===== banner (pokud ho někdy zobrazíš) ===== */
+.banner{
+  position:fixed;top:12px;right:12px;
+  background:#0b0b0b;color:#fff;
+  padding:8px 12px;border-radius:10px;
+  border:1px solid #2a2a2a;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:99
+}
+
+/* ===== tlačítka a vstupy ===== */
+.btn{
+  padding:8px 12px;border-radius:10px;
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:#1a1a1a;cursor:pointer;font-weight:600
+}
+.btn.secondary{
+  background:transparent;border:1px solid var(--border);color:var(--text)
+}
+.input{
+  border:2px solid var(--border);
+  border-radius:10px;
+  padding:8px 12px;
+  background:#1b1b1b;color:var(--text);
+  width:100%;font-size:15px
+}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(249,115,22,.15)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chipBtn{
+  padding:6px 10px;border:1px solid var(--border);
+  border-radius:999px;background:var(--panel-2);
+  color:var(--text);cursor:pointer
+}
+.chipBtn.active{background:var(--accent);color:#1a1a1a;border-color:var(--accent)}
+
+/* project picker výraznější */
+.projectPicker{}
+.pickerRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.projectSelect{
+  border:2px solid var(--accent);
+  border-radius:10px;
+  padding:10px 12px;
+  background:#1b1b1b;color:var(--text);
+  font-size:16px;min-width:220px
+}
+
+/* ===== stopky – velké, uprostřed levé karty, kruhové ===== */
+.stopwatchCard{
+  display:flex;flex-direction:column;
+  gap:14px;
+  align-items:center;       /* vodorovné centrování obsahu karty */
+  justify-content:center;   /* svislé centrování obsahu karty */
+  min-height:380px          /* ať karta drží prostor */
+}
+.stopwatchOuter{
+  display:flex;flex-direction:column;
+  gap:12px;align-items:center;justify-content:center
+}
+.stopwatchCircle{
+  width:300px;height:300px;border-radius:50%;
+  border:10px solid var(--border);
+  display:grid;place-items:center;
+  background:radial-gradient(ellipse at center, #2f2f2f 0%, #252525 100%);
+  box-shadow: inset 0 0 30px rgba(0,0,0,.35)
+}
+.time{font-size:46px;font-weight:800;letter-spacing:.5px}
+.stopwatchButtons{display:grid;gap:10px;grid-auto-flow:row}
+
+/* ===== statistiky ===== */
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.minicard{
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px
+}
+.pill{
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:2px 8px;font-size:12px;color:var(--text)
+}
+
+/* streak rámeček aby vystoupil */
+.streakCard{}
+.streakNumber{font-size:34px;font-weight:800;margin-bottom:6px}
+
+/* ===== poslední záznamy – jeden řádek ===== */
+.recentList{display:grid;gap:6px}
+.recentRow{
+  display:grid;
+  grid-template-columns:1.2fr .7fr .8fr .6fr; /* projekt | den | čas | délka */
+  gap:10px;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--border);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+
+/* ===== týdenní přehled – malý box vpravo nahoře ===== */
+.weekbar{display:flex;gap:6px;align-items:flex-end}
+.smallWeek{height:60px}           /* výška sloupců */
+.wcolSmall{
+  flex:1;background:#1b1b1b;border:1px solid var(--border);
+  border-radius:6px;display:flex;align-items:flex-end;justify-content:center;min-width:14px
+}
+.wbar{width:100%;background:#d1d5db;border-radius:6px}

@@ -1,0 +1,154 @@
+/* výchozí hodnoty pro brown; App.tsx je při přepínání režimu přepíše */
+:root{
+  /* brown režim */
+  --bg:#1b140f;                          /* tmavě hnědé pozadí */
+  --panel:rgba(255,255,255,0.06);        /* „průhledné“ bloky */
+  --panelBorder:rgba(255,255,255,0.10);  /* jemný okraj bloků */
+  --panelSolid:#2a2018;                  /* plný tmavý panel (např. modály) */
+  --text:#ffffff;                        /* základní text */
+  --muted:#c9b8a8;                       /* tlumený text */
+  --accent:#ff8a1f;                      /* oranžová tlačítek */
+  --success:#28c76f;                     /* zelené tiky u zvyků */
+  --danger:#ff4d4f;                      /* červená pro delete atd. */
+  --border:rgba(255,255,255,0.14);       /* obecné rámečky */
+  --inputBg:rgba(255,255,255,0.06);      /* vstupy v brown */
+  --inputBorder:rgba(255,255,255,0.18);
+
+  /* mono režim – tyto hodnoty nastavuje App.tsx při přepnutí tématu:
+     --bg:#eeeeee; --panel:#000; --panelBorder:rgba(0,0,0,.65);
+     --text:#fff; --muted:#d6d6d6; --accent:#ff8a1f; --success:#28c76f;
+     --danger:#ff4d4f; --panelSolid:#fff; --border:#111; --inputBg:#000; --inputBorder:#fff;
+  */
+}
+
+*{ box-sizing:border-box }
+html,body,#root{ height:100% }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* karty/bloky */
+.card{
+  background:var(--panel);
+  border:1px solid var(--panelBorder);
+  border-radius:12px;
+  padding:12px;
+}
+.minicard{
+  background:var(--panel);
+  border:1px solid var(--panelBorder);
+  border-radius:12px;
+  padding:10px;
+}
+
+/* nadpisy a drobný text */
+.sectionTitle{
+  font-weight:700;
+  margin-bottom:8px;
+  letter-spacing:.2px;
+}
+.mini{ font-size:12px; color:var(--muted) }
+.pill{
+  background:rgba(255,255,255,0.15);
+  border:1px solid var(--panelBorder);
+  color:#fff;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:12px;
+}
+
+/* tlačítka */
+button{ font:inherit }
+.btn{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:#000;                 /* kontrast v brown i mono */
+  cursor:pointer;
+}
+.btn.secondary{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+}
+.iconBtn{
+  padding:6px 10px;
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* vstupy */
+.input{
+  width:100%;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid var(--inputBorder);
+  background:var(--inputBg);
+  color:var(--text);
+  outline:none;
+}
+.input::placeholder{ color:rgba(255,255,255,0.55) }
+
+/* týdenní histogram – základní boxy */
+.weekbar{ display:flex; gap:6px; align-items:flex-end }
+.wcolSmall{
+  flex:1;
+  min-width:14px;
+  border-radius:6px;
+  border:1px solid var(--panelBorder);
+  background:rgba(255,255,255,0.15);
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.wbar{ width:100%; border-radius:6px; background:#111827 }
+
+/* scrollbary nenápadně */
+*::-webkit-scrollbar{ width:8px; height:8px }
+*::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.25); border-radius:8px }
+*::-webkit-scrollbar-track{ background:transparent }
+
+/* utility */
+hr{ border:0; border-top:1px solid var(--panelBorder); margin:8px 0 }
+a{ color:inherit }
+
+/* tabulkové řádky v listech (poslední záznamy apod.) */
+.row{
+  display:grid;
+  gap:8px;
+  padding:8px 10px;
+  border-bottom:1px solid var(--panelBorder);
+  align-items:center;
+}
+
+/* u mono režimu chceme bílé bloky s černým okrajem pro některé panely – App.tsx je dává na var(--panelSolid) */
+.whitePanel{
+  background:#fff;
+  color:#000;
+  border:1px solid #000;
+  border-radius:12px;
+  padding:12px;
+}
+
+/* zaškrtávací „čtverečky“ zvyků */
+.habitTick{
+  width:28px; height:28px;
+  border-radius:6px;
+  border:1px solid var(--panelBorder);
+  background:transparent;
+  color:var(--text);
+  font-weight:700;
+  line-height:26px;
+  text-align:center;
+}
+.habitTick--on{
+  background:var(--success);
+  color:#fff;
+}
