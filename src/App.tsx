@@ -1619,7 +1619,7 @@ function ManualAdd({ lang, onAdd }:{ lang:Lang; onAdd:(minutes:number)=>void }) 
   const [val,setVal]=useState(60);
   const wrapRef=useRef<HTMLDivElement|null>(null);
   const barRef=useRef<HTMLDivElement|null>(null);
-    const [dragging,setDragging]=useState(false);
+      const [dragging,setDragging]=useState(false);
 
   useEffect(()=>{
     const onDoc=(e:MouseEvent)=>{
@@ -1632,27 +1632,34 @@ function ManualAdd({ lang, onAdd }:{ lang:Lang; onAdd:(minutes:number)=>void }) 
     return ()=>document.removeEventListener('mousedown', onDoc);
   },[adding]);
 
-  const totalMin=300;
-  const toPct=(m:number)=> clamp(m/totalMin,0,1)*100;
+  const totalMin = 300;
+  const toPct = (m:number)=> clamp(m/totalMin,0,1)*100;
 
-  const softSnap=(m:number)=>{
-    const nearest = Math.round(m/30)*30;
-    return (Math.abs(nearest - m) <= 6) ? nearest : Math.max(1, Math.min(totalMin, m));
-  };
-
-  // NOVĚ: useCallback, aby byla funkce stabilní pro useEffect
+  // setByClientX má uvnitř rovnou i “softSnap” logiku
   const setByClientX = useCallback((clientX:number)=>{
     if(!barRef.current) return;
-    const r=barRef.current.getBoundingClientRect();
-    const px=clamp(clientX - r.left, 0, r.width);
-    const ratio= px / r.width;
-    const mins = Math.round(ratio * totalMin);
-    setVal(softSnap(mins));
-  }, [softSnap]);
+    const r = barRef.current.getBoundingClientRect();
+    const px = clamp(clientX - r.left, 0, r.width);
+    const ratio = px / r.width;
+
+    // původní výpočet minut
+    let mins = Math.round(ratio * totalMin);
+
+    // původní softSnap:
+    const nearest = Math.round(mins / 30) * 30;
+    if(Math.abs(nearest - mins) <= 6){
+      mins = nearest;
+    }
+    mins = Math.max(1, Math.min(totalMin, mins));
+
+    setVal(mins);
+  }, [barRef, totalMin, setVal]);
 
   useEffect(()=>{
-    const up=()=>setDragging(false);
-    const move=(e:MouseEvent)=>{ if(dragging) setByClientX(e.clientX); };
+    const up = ()=>setDragging(false);
+    const move = (e:MouseEvent)=>{
+      if(dragging) setByClientX(e.clientX);
+    };
     window.addEventListener('mouseup', up);
     window.addEventListener('mousemove', move);
     return ()=>{
